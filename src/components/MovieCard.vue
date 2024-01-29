@@ -1,11 +1,16 @@
 <script setup lang="ts">
 
-/* const props = defineProps<{
-    imgPath: string,
+interface MoviesType {
+    id: number,
     title: string,
     genre: string,
     releaseDate: number,
-}>(); */
+    imgPath: string
+}
+
+const props = defineProps<{
+    movie: MoviesType
+}>();
 
 </script>
 
@@ -13,17 +18,17 @@
 
     <div class="movie-card">
 
-        <img :src="'/images/movie-image.PNG'" alt="Movie image">
+        <img v-lazyload="movie.imgPath" :alt="movie.title">
 
         <div class="movie-info">
 
             <div class="movie-title">
-                <h3>Pulp Fiction</h3>
-                <p>Action & Adventure</p>
+                <h3>{{ movie.title }}</h3>
+                <p>{{ movie.genre }}</p>
             </div>
 
             <div class="movie-release-date">
-                2004
+                {{ movie.releaseDate }}
             </div>
 
         </div>

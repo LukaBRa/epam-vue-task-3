@@ -4,7 +4,12 @@ import Button from './components/Button.vue';
 import MovieCard from './components/MovieCard.vue';
 import WebsiteTitle from './components/WebsiteTitle.vue';
 import Footer from './layout/Footer.vue';
-import { ref } from "vue";
+import { ref, type Ref } from "vue";
+import { useSearch } from "./composables/useSearch.ts";
+
+const { movies, getMovies } = useSearch();
+const selectedSearchFilter = ref("title");
+const inputSearchText: Ref<string> = ref("");
 
 interface ButtonToggleArgs {
     type: string,
@@ -44,27 +49,17 @@ const sortFilterButtons = ref([
 const toggleButton = (arg: ButtonToggleArgs) => {
     if(arg.type == "search"){
 
-        searchFilterButtons.value = searchFilterButtons.value.map((btn) => {
-            if(btn.title === arg.title){
-                btn.active = true;
-            }else{
-                btn.active = false;
-            }
-            return btn;
-        })
-
+        searchFilterButtons.value = searchFilterButtons.value.map(btn => ({ ...btn, active: btn.title === arg.title }))
+        selectedSearchFilter.value = arg.title.toLowerCase();
     } else {
 
-        sortFilterButtons.value = sortFilterButtons.value.map((btn) => {
-            if(btn.title === arg.title){
-                btn.active = true;
-            }else{
-                btn.active = false;
-            }
-            return btn;
-        })
+        sortFilterButtons.value = sortFilterButtons.value.map(btn => ({ ...btn, active: btn.title === arg.title }));
 
     }
+}
+
+const handleSearch = () => {
+    getMovies(inputSearchText.value, selectedSearchFilter.value);
 }
 
 </script>
@@ -84,8 +79,8 @@ const toggleButton = (arg: ButtonToggleArgs) => {
             <h1>FIND YOUR MOVIE</h1>
 
             <div class="search-bar">
-                <input type="text">
-                <Button title="SEARCH" type="primary" />
+                <input v-model="inputSearchText" type="text">
+                <Button @click="handleSearch" title="SEARCH" type="primary" />
             </div>
 
             <Filter filterTitle="SEARCH BY" :filter-buttons="searchFilterButtons" @toggleButton="toggleButton"/>
@@ -97,7 +92,7 @@ const toggleButton = (arg: ButtonToggleArgs) => {
     <section class="container-fluid bg-lightgray">
         <div class="container">
             <div class="movies-filter">
-                <p>7 movie found</p>
+                <p>{{ movies.length }} movie found</p>
                 <Filter filterTitle="SORT BY" :filter-buttons="sortFilterButtons" @toggleButton="toggleButton"/>
             </div>
         </div>
@@ -107,12 +102,7 @@ const toggleButton = (arg: ButtonToggleArgs) => {
 
         <div class="container">
             <div class="movie-list">
-                <MovieCard />
-                <MovieCard />
-                <MovieCard />
-                <MovieCard />
-                <MovieCard />
-                <MovieCard />
+                <MovieCard v-for="movie in movies" :key="movie.id" :movie="movie" />
             </div>
         </div>
 
