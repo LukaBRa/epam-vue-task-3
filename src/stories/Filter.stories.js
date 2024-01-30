@@ -1,4 +1,4 @@
-import Filter from "./Filter.vue";
+import Filter from "../components/Filter.vue";
 
 export default {
     title: 'FILTER',

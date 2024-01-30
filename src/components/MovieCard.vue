@@ -1,16 +1,13 @@
 <script setup lang="ts">
+import { computed } from "vue";
+import { formatGenres } from "@/utils/formatGenres";
 
-interface MoviesType {
-    id: number,
-    title: string,
-    genre: string,
-    releaseDate: number,
-    imgPath: string
-}
+const props = defineProps(["movie"]);
 
-const props = defineProps<{
-    movie: MoviesType
-}>();
+const releaseDate = computed(() => {
+    return new Date(props.movie.releaseDate).getFullYear();
+})
+
 
 </script>
 
@@ -18,17 +15,17 @@ const props = defineProps<{
 
     <div class="movie-card">
 
-        <img v-lazyload="movie.imgPath" :alt="movie.title">
+        <img @click="$emit('selectMovie', movie.id)" v-lazyload="movie.posterurl" :alt="movie.title">
 
         <div class="movie-info">
 
             <div class="movie-title">
                 <h3>{{ movie.title }}</h3>
-                <p>{{ movie.genre }}</p>
+                <p>{{ formatGenres(movie.genres) }}</p>
             </div>
 
             <div class="movie-release-date">
-                {{ movie.releaseDate }}
+                {{ releaseDate }}
             </div>
 
         </div>
@@ -47,6 +44,7 @@ const props = defineProps<{
     width: 100%;
     height: 450px;
     object-fit: cover;
+    cursor: pointer;
 }
 
 .movie-info {

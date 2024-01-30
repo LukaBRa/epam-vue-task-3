@@ -1,12 +1,8 @@
 <script setup lang="ts">
 import { computed } from "vue";
+import type { FilterButtonProps } from "@/types/FilterTypes";
 
-const props = defineProps<{
-    type: string,
-    title: string,
-    active: boolean,
-    buttonSide: string,
-}>()
+const props = defineProps<FilterButtonProps>()
 
 const buttonClass = computed(() => ({
     active: props.active,

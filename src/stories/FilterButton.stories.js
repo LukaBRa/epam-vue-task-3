@@ -1,4 +1,4 @@
-import FilterButton from "./FilterButton.vue";
+import FilterButton from "../components/FilterButton.vue";
 
 export default {
     title: 'FILTER BUTTON',
