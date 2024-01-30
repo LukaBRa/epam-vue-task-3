@@ -19,11 +19,7 @@ const useMoviesStore = defineStore("moviesStore", () => {
 
         } else {
 
-            if(property == "title"){
-                movies.value = allMovies.filter(movie => movie.title.toLowerCase().indexOf(searchQuery.toLowerCase()) !== -1);
-            } else {
-                movies.value = allMovies.filter(movie => movie.genres.includes(searchQuery));
-            }
+            movies.value = allMovies.filter(movie => movie[property].includes(searchQuery));
 
         }
     }

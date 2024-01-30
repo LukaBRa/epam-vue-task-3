@@ -40,7 +40,7 @@ const useFilterButtonsStore = defineStore("filterButtonsStore", () => {
         if(arg.type == "search"){
     
             searchFilterButtons.value = searchFilterButtons.value.map(btn => ({ ...btn, active: btn.title === arg.title }))
-            selectedSearchFilter.value = arg.title.toLowerCase();
+            selectedSearchFilter.value = arg.title == "GENRE" ? arg.title.toLowerCase() + "s" : arg.title.toLowerCase();
         } else {
     
             sortFilterButtons.value = sortFilterButtons.value.map(btn => ({ ...btn, active: btn.title === arg.title }));
