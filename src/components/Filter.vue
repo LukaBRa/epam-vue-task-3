@@ -1,13 +1,9 @@
 <script setup lang="ts">
-import type { PropType } from "vue";
-import FilterButton from "./FilterButton.vue"
+import FilterButton from "./FilterButton.vue";
+import useFilterButtonsStore from "@/store/filterButtonsStore";
+import type { FilterButtonProps } from "@/types/FilterTypes";
 
-interface FilterButtonProps {
-    type: string,
-    title: string,
-    active: boolean,
-    buttonSide: string
-}
+const filterStore = useFilterButtonsStore();
 
 interface ButtonToggleArgs {
     type: string,
@@ -19,10 +15,8 @@ defineProps<{
     filterButtons: FilterButtonProps[],
 }>()
 
-const emit = defineEmits(['toggleButton']);
-
 const buttonToggled = (args: ButtonToggleArgs) => {
-    emit("toggleButton", args);
+    filterStore.toggleButton(args);
 }
 
 </script>

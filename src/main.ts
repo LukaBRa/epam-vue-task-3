@@ -1,9 +1,13 @@
 import './assets/main.css'
 
 import { createApp } from 'vue'
-import App from './App.vue'
+import { createPinia } from "pinia";
+import App from './App.vue';
 
 const app = createApp(App);
+
+const pinia = createPinia();
+app.use(pinia);
 
 app.directive("lazyload", {
     mounted(el, binding) {
@@ -18,7 +22,6 @@ app.directive("lazyload", {
             ) {
                 el.src = binding.value;
                 window.removeEventListener("scroll", handleScrollEvent);
-                console.log(`img ${binding.value}`)
             }
         }
 

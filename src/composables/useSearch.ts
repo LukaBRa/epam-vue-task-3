@@ -1,7 +1,7 @@
 import { ref } from "vue"
 import type { Ref } from "vue"
 
-interface MoviesType {
+/* interface MoviesType {
     id: number,
     title: string,
     genre: string,
@@ -57,15 +57,15 @@ const tempMovies: MoviesType[] = [
         releaseDate: 1994,
         imgPath: "/images/reservoir-dogs.PNG"
     },
-]
+] */
 
-export function useSearch(): ComposableReturnType {
+/* export function useSearch() {
 
-    const movies: Ref<MoviesType[]> = ref([...tempMovies]);
+    const movies= ref();
 
     function getMovies(searchText: string, property: string) {
         if(searchText === ""){
-            movies.value = [...tempMovies];
+            
             return;
         }
         if(property == "title"){
@@ -76,4 +76,4 @@ export function useSearch(): ComposableReturnType {
     }
 
     return { movies, getMovies };
-}
+} */
