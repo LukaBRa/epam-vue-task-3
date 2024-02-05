@@ -13,7 +13,7 @@ const buttonStyle = {
 
 <template>
 
-    <button :class="buttonStyle">{{ title }}</button>
+    <button data-cy="button" :class="buttonStyle">{{ title }}</button>
 
 </template>
 

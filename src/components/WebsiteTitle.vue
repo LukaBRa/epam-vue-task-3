@@ -6,7 +6,7 @@
 
 <template>
 
-    <h2><span>netflix</span>roulette</h2>
+    <h2 data-cy="website-title">netflixroulette</h2>
 
 </template>
 

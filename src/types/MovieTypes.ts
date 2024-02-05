@@ -13,4 +13,5 @@ export interface Movie {
     posterurl: string,
     id: number,
     title: string,
+    [property: string]: number | string | string[] | number[],
 }

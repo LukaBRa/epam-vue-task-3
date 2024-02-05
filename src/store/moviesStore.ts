@@ -3,6 +3,7 @@ import type { Ref } from "vue";
 import { defineStore } from "pinia";
 import allMovies from "@/movies.json";
 import useFilterButtonsStore from "./filterButtonsStore";
+import type { Movie } from "@/types/MovieTypes";
 
 const useMoviesStore = defineStore("moviesStore", () => {
 

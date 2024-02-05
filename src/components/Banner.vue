@@ -20,7 +20,7 @@ const filterStore = useFilterButtonsStore();
 
     <section class="search-section container">
 
-        <h1>FIND YOUR MOVIE</h1>
+        <h1 data-cy="banner-title">FIND YOUR MOVIE</h1>
 
         <ActionBar />
 
