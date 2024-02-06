@@ -1,13 +1,20 @@
-import { ref } from "vue";
-import allMovies from "@/movies.json";
+import { ref, type Ref } from "vue";
+import apiClient from "@/apiClient";
+import type { Movie } from "@/types/MovieTypes";
 
-export function useMovie() {
+export default function useMovies() {
+    const movies: Ref<Movie[]> = ref([]);
+    const error = ref("");
 
-    const movie = ref();
-
-    function getMovie(id: number) {
-        movie.value = allMovies.find(movie => movie.id === id); 
+    const getAllMovies = async() => {
+        try {
+            const response = await apiClient.get("/movies");
+            movies.value = response.data;
+        } catch (err) {
+            error.value = "An error occurred while trying to fetch movies";
+            console.error(err);
+        }
     }
 
-    return { movie, getMovie }
+    return { movies, error, getAllMovies };
 }

@@ -1,17 +1,22 @@
-import { computed, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import type { Ref } from "vue";
 import { defineStore } from "pinia";
 import allMovies from "@/movies.json";
 import useFilterButtonsStore from "./filterButtonsStore";
 import type { Movie } from "@/types/MovieTypes";
+import useMovies from "@/composables/useMovie";
 
 const useMoviesStore = defineStore("moviesStore", () => {
 
-    const movies = ref([...allMovies]);
+    const { movies, error, getAllMovies } = useMovies();
 
-    function searchMovies(searchQuery: string | string[], property: string) {
+    onMounted(async () => {
+        await getAllMovies();
+    }); 
+
+    async function searchMovies(searchQuery: string | string[], property: string) {
         if(searchQuery === ""){
-            movies.value = [...allMovies];
+            await getAllMovies();
             return;
         }
         if(Array.isArray(searchQuery)){
@@ -20,7 +25,7 @@ const useMoviesStore = defineStore("moviesStore", () => {
 
         } else {
 
-            movies.value = allMovies.filter(movie => movie[property].includes(searchQuery));
+            movies.value = allMovies.filter((movie: Movie) => movie[property].toString().includes(searchQuery));
 
         }
     }

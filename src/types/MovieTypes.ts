@@ -6,7 +6,7 @@ export interface Movie {
     contentRating: string,
     duration: string,
     releaseDate: string,
-    averageRating: 0,
+    averageRating: number,
     storyline: string,
     actors: string[],
     imdbRating: number,
