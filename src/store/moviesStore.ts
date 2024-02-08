@@ -32,9 +32,9 @@ const useMoviesStore = defineStore("moviesStore", () => {
 
     function sortMovies(sortBy: string) {
         if(sortBy === "release date"){
-            movies.value = movies.value.sort((a, b) => new Date(b.releaseDate).getFullYear() - new Date(a.releaseDate).getFullYear());
+            movies.value = movies.value.sort((a: Movie, b: Movie) => new Date(b.releaseDate).getFullYear() - new Date(a.releaseDate).getFullYear());
         } else {
-            movies.value = movies.value.sort((a, b) => b.imdbRating - a.imdbRating);
+            movies.value = movies.value.sort((a: Movie, b: Movie) => b.imdbRating - a.imdbRating);
         }
     }
 

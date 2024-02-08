@@ -3,26 +3,28 @@ import MovieDetails from '@/components/MovieDetails.vue';
 import MovieList from '@/components/MovieList.vue';
 import Footer from '@/layout/Footer.vue';
 import useMoviesStore from '@/store/moviesStore';
-import { onMounted, computed } from 'vue';
+import { onMounted, computed, watch } from 'vue';
 import { formatGenres } from "@/utils/formatGenres";
 import type { Movie } from '@/types/MovieTypes';
 import { ref } from "vue";
 import type { Ref } from "vue";
+import MovieService from "../services/movieService";
 
 const props = defineProps(["movieId"]);
 const movieStore = useMoviesStore();
 const emit = defineEmits(["closeMoviePage"]);
-const movie = ref(movieStore.movies.find(movie => movie.id == props.movieId));
+const movie = ref();
 
-onMounted((() => {
+onMounted((async() => {
+    movie.value = await MovieService.getSingle(props.movieId)
     if(movie.value) {
         movieStore.searchMovies(movie.value.genres, "genre");
     }
     window.scrollTo(0, 0);
 }));
 
-const selectMovie = (id: number) => {
-    movie.value = movieStore.movies.find(movie => movie.id === id);
+const selectMovie = async (id: number) => {
+    movie.value = await MovieService.getSingle(id);
     if(movie.value){
         movieStore.searchMovies(movie.value.genres, "genre");
     }
@@ -37,7 +39,7 @@ const closeMoviePage = () => {
 
 <template>
 
-    <MovieDetails :movie="movie" @closeMoviePage="closeMoviePage"/>
+    <MovieDetails v-if="movie" :movie="movie" @closeMoviePage="closeMoviePage"/>
 
     <section class="container-fluid bg-lightgray">
         <div class="container genres-section">

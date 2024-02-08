@@ -1,18 +1,16 @@
 import { ref, type Ref } from "vue";
-import apiClient from "@/apiClient";
 import type { Movie } from "@/types/MovieTypes";
+import MovieService from "../services/movieService";
 
 export default function useMovies() {
     const movies: Ref<Movie[]> = ref([]);
     const error = ref("");
 
-    const getAllMovies = async() => {
+    const getAllMovies = async () => {
         try {
-            const response = await apiClient.get("/movies");
-            movies.value = response.data;
+            movies.value = await MovieService.getAll();
         } catch (err) {
-            error.value = "An error occurred while trying to fetch movies";
-            console.error(err);
+            console.log(err);
         }
     }
 
