@@ -20,11 +20,11 @@ const filterStore = useFilterButtonsStore();
 
     <section class="search-section container">
 
-        <h1 data-cy="banner-title">FIND YOUR MOVIE</h1>
+        <h1 id="banner-title" data-cy="banner-title">FIND YOUR MOVIE</h1>
 
-        <ActionBar />
+        <ActionBar id="banner-action-bar"/>
 
-        <Filter filterTitle="SEARCH BY" :filter-buttons="filterStore.searchFilterButtons"/>
+        <Filter id="banner-filter" filterTitle="SEARCH BY" :filter-buttons="filterStore.searchFilterButtons"/>
 
     </section>
 

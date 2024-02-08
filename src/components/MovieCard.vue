@@ -15,16 +15,16 @@ const releaseDate = computed(() => {
 
     <div class="movie-card">
 
-        <img data-cy="card-img" @click="$emit('selectMovie', movie.id)" v-lazyload="movie.posterurl" :alt="movie.title">
+        <img id="card-image" data-cy="card-img" @click="$emit('selectMovie', movie.id)" v-lazyload="movie.posterurl" :alt="movie.title">
 
         <div class="movie-info">
 
             <div class="movie-title">
-                <h3 data-cy="card-title">{{ movie.title }}</h3>
-                <p>{{ formatGenres(movie.genres) }}</p>
+                <h3 id="card-title" data-cy="card-title">{{ movie.title }}</h3>
+                <p id="card-genres">{{ formatGenres(movie.genres) }}</p>
             </div>
 
-            <div data-cy="card-release-date" class="movie-release-date">
+            <div id="card-release-date" data-cy="card-release-date" class="movie-release-date">
                 {{ releaseDate }}
             </div>
 

@@ -21,7 +21,7 @@ const movieDuration = computed(() => {
 
     <div class="container movie-header-section">
         <WebsiteTitle />
-        <button data-cy="close-movie-page-btn" @click="$emit('closeMoviePage')" class="search-button"><span class="material-icons search-icon">search</span></button>
+        <button id="close-movie-page-button" data-cy="close-movie-page-btn" @click="$emit('closeMoviePage')" class="search-button"><span class="material-icons search-icon">search</span></button>
     </div>
 
     <section class="container">
@@ -32,15 +32,15 @@ const movieDuration = computed(() => {
 
             <div class="movie-overview-details">
                 <div class="movie-title">
-                    <h1 data-cy="movie-title">{{ movie.title }}</h1>
-                    <p data-cy="movie-rating" class="movie-rating">{{ movie.imdbRating }}</p>
+                    <h1 id="movie-title" data-cy="movie-title">{{ movie.title }}</h1>
+                    <p id="movie-rating" data-cy="movie-rating" class="movie-rating">{{ movie.imdbRating }}</p>
                 </div>
-                <p class="movie-genres">{{ formatGenres(movie.genres) }}</p>
+                <p id="movie-genres" class="movie-genres">{{ formatGenres(movie.genres) }}</p>
                 <div class="movie-duration-release">
-                    <p data-cy="movie-release-date">{{ new Date(movie.releaseDate).getFullYear() }}</p>
-                    <p data-cy="movie-duration">{{ movieDuration }}</p>
+                    <p id="movie-release-date" data-cy="movie-release-date">{{ new Date(movie.releaseDate).getFullYear() }}</p>
+                    <p id="movie-duration" data-cy="movie-duration">{{ movieDuration }}</p>
                 </div>
-                <p data-cy="movie-description" class="movie-description">{{ movie.storyline }}</p>
+                <p id="movie-description" data-cy="movie-description" class="movie-description">{{ movie.storyline }}</p>
             </div>
         </div>
 

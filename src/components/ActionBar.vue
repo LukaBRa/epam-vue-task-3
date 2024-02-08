@@ -18,8 +18,8 @@ const handleSearch = () => {
 <template>
 
     <div class="search-bar">
-        <input data-cy="search-input" @keyup.enter="handleSearch" v-model="inputSearchText" type="text">
-        <Button data-cy="search-button" @click="handleSearch" title="SEARCH" type="primary" />
+        <input id="search-input" data-cy="search-input" @keyup.enter="handleSearch" v-model="inputSearchText" type="text">
+        <Button id="search-button" data-cy="search-button" @click="handleSearch" title="SEARCH" type="primary" />
     </div>
 
 </template>
