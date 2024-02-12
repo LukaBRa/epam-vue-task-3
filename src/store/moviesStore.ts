@@ -1,16 +1,22 @@
-import { computed, ref } from "vue";
+import { computed, onMounted, ref } from "vue";
 import type { Ref } from "vue";
 import { defineStore } from "pinia";
 import allMovies from "@/movies.json";
 import useFilterButtonsStore from "./filterButtonsStore";
+import type { Movie } from "@/types/MovieTypes";
+import useMovies from "@/composables/useMovie";
 
 const useMoviesStore = defineStore("moviesStore", () => {
 
-    const movies = ref([...allMovies]);
+    const { movies, error, getAllMovies } = useMovies();
 
-    function searchMovies(searchQuery: string | string[], property: string) {
+    onMounted(async () => {
+        await getAllMovies();
+    }); 
+
+    async function searchMovies(searchQuery: string | string[], property: string) {
         if(searchQuery === ""){
-            movies.value = [...allMovies];
+            await getAllMovies();
             return;
         }
         if(Array.isArray(searchQuery)){
@@ -19,16 +25,16 @@ const useMoviesStore = defineStore("moviesStore", () => {
 
         } else {
 
-            movies.value = allMovies.filter(movie => movie[property].includes(searchQuery));
+            movies.value = allMovies.filter((movie: Movie) => movie[property].toString().includes(searchQuery));
 
         }
     }
 
     function sortMovies(sortBy: string) {
         if(sortBy === "release date"){
-            movies.value = movies.value.sort((a, b) => new Date(b.releaseDate).getFullYear() - new Date(a.releaseDate).getFullYear());
+            movies.value = movies.value.sort((a: Movie, b: Movie) => new Date(b.releaseDate).getFullYear() - new Date(a.releaseDate).getFullYear());
         } else {
-            movies.value = movies.value.sort((a, b) => b.imdbRating - a.imdbRating);
+            movies.value = movies.value.sort((a: Movie, b: Movie) => b.imdbRating - a.imdbRating);
         }
     }
 

@@ -14,7 +14,7 @@ const buttonClass = computed(() => ({
 
 <template>
 
-    <button @click="$emit('toggleFilterButton', {type, title})" :class="buttonClass">{{ title }}</button>
+    <button id="button" data-cy="filter-button" @click="$emit('toggleFilterButton', {type, title})" :class="buttonClass">{{ title }}</button>
 
 </template>
 

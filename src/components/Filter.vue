@@ -24,10 +24,10 @@ const buttonToggled = (args: ButtonToggleArgs) => {
 <template>
 
     <div class="filter-container">
-        <p>{{ filterTitle }}</p>
+        <p id="filter-title" data-cy="filter-title">{{ filterTitle }}</p>
 
         <div class="filter-buttons">
-            <FilterButton v-for="button in filterButtons"
+            <FilterButton data-test="filter-button" data-cy="filter-button" v-for="button in filterButtons"
                 :type="button.type" 
                 :title="button.title" 
                 :active="button.active" 

@@ -23,10 +23,10 @@ const selectMovie = (id: number) => {
     <section class="container-fluid bg-darkgray padding-movie-list">
 
     <div class="container">
-        <div v-if="moviesStore.moviesCount > 0" class="movie-list">
-            <MovieCard v-for="movie in moviesStore.movies" :key="movie.id" :movie="movie" @selectMovie="selectMovie"/>
+        <div id="movies" v-if="moviesStore.moviesCount > 0" class="movie-list">
+            <MovieCard data-cy="movie-card" v-for="movie in moviesStore.movies" :key="movie.id" :movie="movie" @selectMovie="selectMovie"/>
         </div>
-        <h1 v-else>No films found</h1>
+        <h1 id="no-movies" v-else>No films found</h1>
     </div>
 
     </section>

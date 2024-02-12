@@ -3,24 +3,31 @@ import MovieDetails from '@/components/MovieDetails.vue';
 import MovieList from '@/components/MovieList.vue';
 import Footer from '@/layout/Footer.vue';
 import useMoviesStore from '@/store/moviesStore';
-import { onMounted, computed } from 'vue';
-import { useMovie } from "@/composables/useMovie";
+import { onMounted, computed, watch } from 'vue';
 import { formatGenres } from "@/utils/formatGenres";
+import type { Movie } from '@/types/MovieTypes';
+import { ref } from "vue";
+import type { Ref } from "vue";
+import MovieService from "../services/movieService";
 
 const props = defineProps(["movieId"]);
 const movieStore = useMoviesStore();
-const { movie, getMovie } = useMovie();
 const emit = defineEmits(["closeMoviePage"]);
+const movie = ref();
 
-onMounted(() => {
-    getMovie(props.movieId);
-    movieStore.searchMovies(movie.value.genres, "genre");
+onMounted((async() => {
+    movie.value = await MovieService.getSingle(props.movieId)
+    if(movie.value) {
+        movieStore.searchMovies(movie.value.genres, "genre");
+    }
     window.scrollTo(0, 0);
-});
+}));
 
-const selectMovie = (id: number) => {
-    getMovie(id);
-    movieStore.searchMovies(movie.value.genres, "genre");
+const selectMovie = async (id: number) => {
+    movie.value = await MovieService.getSingle(id);
+    if(movie.value){
+        movieStore.searchMovies(movie.value.genres, "genre");
+    }
     window.scrollTo(0, 0);
 }
 
@@ -38,7 +45,7 @@ const closeMoviePage = () => {
         <div class="container genres-section">
             <p v-if="movie" class="genres-section-text">Films by {{ formatGenres(movie.genres) }} {{ movie.genres.length > 1 ? "genres" : "genre" }}</p>
         </div>
-    </section>
+    </section> 
 
     <MovieList @selectMovie="selectMovie" @closeMoviePage="closeMoviePage"/>
 

@@ -3,10 +3,8 @@ import Filter from '../components/Filter.vue';
 import MovieList from '@/components/MovieList.vue';
 import Footer from '../layout/Footer.vue';
 import Banner from '@/components/Banner.vue';
-import { ref, type Ref } from "vue";
 import useFilterButtonsStore from '@/store/filterButtonsStore';
 import useMoviesStore from '@/store/moviesStore';
-import { computed } from 'vue';
 
 const filterStore = useFilterButtonsStore();
 const moviesStore = useMoviesStore();
