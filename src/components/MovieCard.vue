@@ -1,13 +1,18 @@
 <script setup lang="ts">
 import { computed } from "vue";
 import { formatGenres } from "@/utils/formatGenres";
+import { useRouter } from "vue-router";
 
 const props = defineProps(["movie"]);
+const router = useRouter();
 
 const releaseDate = computed(() => {
     return new Date(props.movie.releaseDate).getFullYear();
 })
 
+const selectMovie = (id: number) => {
+    router.push("/movie/" + id);
+}
 
 </script>
 
@@ -15,7 +20,7 @@ const releaseDate = computed(() => {
 
     <div class="movie-card">
 
-        <img id="card-image" data-cy="card-img" @click="$emit('selectMovie', movie.id)" v-lazyload="movie.posterurl" :alt="movie.title">
+        <img id="card-image" data-cy="card-img" @click="selectMovie(movie.id)" v-lazyload="movie.posterurl" :alt="movie.title">
 
         <div class="movie-info">
 
