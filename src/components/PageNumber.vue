@@ -11,26 +11,26 @@ const props = defineProps<{
 }>();
 
 const togglePage = (page: number) => {
-    if(route.name == "homepage"){
+    if(route && route.name == "homepage"){
         router.push(`/?page=${page}`);
     }
-    if(route.name == "moviepage"){
+    if(route && route.name == "moviepage"){
         router.push({ path: route.fullPath, query: { page } });
     }
 }
 
 const activePage = computed(() => {
-    if(!route.query.page && props.pageNumber.n == 1){
+    if(route && !route.query.page && props.pageNumber.n == 1){
         return true
     }
-    return parseInt(route.query.page as string) == props.pageNumber.n;
+    return parseInt(route && route.query.page as string) == props.pageNumber.n;
 });
 
 </script>
 
 <template>
 
-    <button @click="togglePage(pageNumber.n)" :class="{ active: activePage }">{{ pageNumber.n }}</button>
+    <button id="page-number-button" @click="togglePage(pageNumber.n)" :class="{ active: activePage }">{{ pageNumber.n }}</button>
 
 </template>
 

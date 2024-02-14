@@ -4,6 +4,28 @@ import { test, expect, vi } from "vitest";
 import { createTestingPinia } from "@pinia/testing";
 import useMoviesStore from "@/store/moviesStore";
 import useFilterButtonsStore from "@/store/filterButtonsStore";
+import { useRoute, useRouter } from "vue-router";
+
+vi.mock('vue-router', () => ({
+  useRoute: vi.fn(),
+  useRouter: vi.fn(() => ({
+    push: () => {}
+  }))
+}))
+
+useRoute.mockImplementationOnce(() => ({
+    params: {
+        id: 1
+      },
+      query: {
+        page: "1"
+      }
+  }))
+
+  const push = vi.fn()
+  useRouter.mockImplementationOnce(() => ({
+    push
+  }))
 
 const wrapper = mount(MovieList, {
     global: {
@@ -12,7 +34,8 @@ const wrapper = mount(MovieList, {
                 stubActions: false,
                 createSpy: vi.fn,
             })
-        ]
+        ],
+        stubs: ["router-link", "router-view"]
     }
 });
 

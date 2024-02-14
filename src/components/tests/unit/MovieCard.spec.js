@@ -1,9 +1,29 @@
 import { mount } from "@vue/test-utils";
 import MovieCard from "../../MovieCard.vue";
-import { test, expect, vi } from "vitest";
+import { test, expect, vi, vitest } from "vitest";
 import { createTestingPinia } from "@pinia/testing";
+import { useRoute, useRouter } from "vue-router";
 
-test("Component should display movie Pulp Fiction", () => {
+vi.mock('vue-router', () => ({
+  useRoute: vi.fn(),
+  useRouter: vi.fn(() => ({
+    push: () => {}
+  }))
+}))
+
+test("Component should display movie Pulp Fiction", async () => {
+
+  useRoute.mockImplementationOnce(() => ({
+    params: {
+      id: 1
+    }
+  }))
+
+  const push = vi.fn()
+  useRouter.mockImplementationOnce(() => ({
+    push
+  }))
+
     const wrapper = mount(MovieCard, {
         props: {
             movie: {
@@ -67,7 +87,8 @@ test("Component should display movie Pulp Fiction", () => {
                     stubActions: false,
                     createSpy: vi.fn,
                 })
-            ]
+            ],
+            stubs: ["router-link", "router-view"]
         }
     });
     expect(wrapper.find('#card-title').text()).toBe("Pulp Fiction");
@@ -75,7 +96,7 @@ test("Component should display movie Pulp Fiction", () => {
     expect(wrapper.find("#card-release-date").text()).toBe("1994");
 });
 
-test("Component should emit 'selectMovie'", async () => {
+test("Component should call 'selectMovie' once", async () => {
     const wrapper = mount(MovieCard, {
         props: {
             movie: {
@@ -143,7 +164,8 @@ test("Component should emit 'selectMovie'", async () => {
         }
     });
 
+    const selectMovieSpy = vi.spyOn(wrapper.vm, "selectMovie");
     await wrapper.find("#card-image").trigger("click");
 
-    expect(wrapper.emitted().selectMovie).toBeTruthy();
+    expect(selectMovieSpy).toBeCalledTimes(1);
 });
