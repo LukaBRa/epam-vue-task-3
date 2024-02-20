@@ -9,14 +9,15 @@ import type { Movie } from '@/types/MovieTypes';
 import { ref } from "vue";
 import type { Ref } from "vue";
 import MovieService from "../services/movieService";
+import { useRoute, useRouter } from 'vue-router';
 
-const props = defineProps(["movieId"]);
+const route = useRoute();
+const router = useRouter();
 const movieStore = useMoviesStore();
-const emit = defineEmits(["closeMoviePage"]);
 const movie = ref();
 
 onMounted((async() => {
-    movie.value = await MovieService.getSingle(props.movieId)
+    movie.value = await MovieService.getSingle(parseInt(route.params.id as string));
     if(movie.value) {
         movieStore.searchMovies(movie.value.genres, "genre");
     }
@@ -24,16 +25,21 @@ onMounted((async() => {
 }));
 
 const selectMovie = async (id: number) => {
-    movie.value = await MovieService.getSingle(id);
-    if(movie.value){
-        movieStore.searchMovies(movie.value.genres, "genre");
-    }
-    window.scrollTo(0, 0);
+    router.push("/movie/" + id);
 }
 
 const closeMoviePage = () => {
-    emit("closeMoviePage");
+    router.push("/");
 }
+
+watch(() => route.params.id, async (newSortFilter, oldSortFilter) => {
+    movie.value = await MovieService.getSingle(parseInt(route.params.id as string));
+    window.scrollTo(0, 0);
+})
+
+watch(() => route.query.page, (newSortFilter, oldSortFilter) => {
+    window.scrollTo(0, 0);
+})
 
 </script>
 

@@ -10,9 +10,9 @@ const useMoviesStore = defineStore("moviesStore", () => {
 
     const { movies, error, getAllMovies } = useMovies();
 
-    onMounted(async () => {
+    /* onMounted(async () => {
         await getAllMovies();
-    }); 
+    });  */
 
     async function searchMovies(searchQuery: string | string[], property: string) {
         if(searchQuery === ""){

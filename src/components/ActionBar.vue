@@ -4,13 +4,16 @@ import { ref } from "vue";
 import type { Ref } from "vue";
 import useMoviesStore from "@/store/moviesStore";
 import useFilterButtonsStore from "@/store/filterButtonsStore";
+import { useRouter } from "vue-router";
 
 const inputSearchText: Ref<string> = ref("");
 const movieStore = useMoviesStore();
 const filterStore = useFilterButtonsStore();
+const router = useRouter();
 
 const handleSearch = () => {
     movieStore.searchMovies(inputSearchText.value, filterStore.selectedSearchFilter);
+    router.push("/?page=1");
 }
 
 </script>
